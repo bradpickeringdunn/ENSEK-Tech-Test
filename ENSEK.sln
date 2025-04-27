@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENSEK.DataAccess", "ENSEK.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENSEK.Imports", "ENSEK.Imports\ENSEK.Imports.csproj", "{D10DFF33-B5C8-4AFE-A16C-E2A039C49032}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENSEK.Imports.Tests", "ENSEK.Imports.Tests\ENSEK.Imports.Tests.csproj", "{AA236B19-A375-4FE8-A3F2-D21720D8B312}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{D10DFF33-B5C8-4AFE-A16C-E2A039C49032}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D10DFF33-B5C8-4AFE-A16C-E2A039C49032}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D10DFF33-B5C8-4AFE-A16C-E2A039C49032}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA236B19-A375-4FE8-A3F2-D21720D8B312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA236B19-A375-4FE8-A3F2-D21720D8B312}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA236B19-A375-4FE8-A3F2-D21720D8B312}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA236B19-A375-4FE8-A3F2-D21720D8B312}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

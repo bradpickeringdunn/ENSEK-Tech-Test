@@ -1,6 +1,8 @@
-﻿namespace ENSEK.Imports.Validators;
+﻿using ENSEK.Imports.Dtos;
 
-public interface ICsvValidator
+namespace ENSEK.Imports.Validators;
+
+public interface ICsvValidator<T> where T : class
 {
-    object ValidateHeaders(string[] strings);
+    Task<IList<string>> ValidateHeaders(string[] strings);
 }

@@ -1,6 +1,6 @@
 ﻿using ENSEK.DataAccess;
 using ENSEK.DataAccess.Entities;
-using ENSEK.Imports.Dtos;
+using ENSEK.Imports.Dtos.MeterReading;
 using Microsoft.EntityFrameworkCore;
 
 namespace ENSEK.Imports.Importers;
@@ -14,8 +14,9 @@ public class CsvImporter : ICsvImporter
         _dbContext = dbContext;
     }
 
-    public async Task Import(List<MeterReadingDto> records)
+    public async Task Import(IList<MeterReadingDto> records)
     {
+
         foreach (var record in records)
         {
             _dbContext.MeterReadings.Add(new MeterReading

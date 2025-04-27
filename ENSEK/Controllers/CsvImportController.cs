@@ -3,6 +3,7 @@ using System.Text;
 using System.IO;
 using ENSEK.Imports.Parsers;
 using ENSEK.Imports.Importers;
+using ENSEK.Imports.Dtos.MeterReading;
 
 namespace ENSEK.Controllers
 {
@@ -40,15 +41,15 @@ namespace ENSEK.Controllers
                 var csvContent = await streamReader.ReadToEndAsync();
 
                 // Process the CSV content
-                var records = _csvParser.ParseCsv(csvContent);
+                var result = await _csvParser.ParseCsv(csvContent);
 
-                await _csvImporter.Import(records);
+                await _csvImporter.Import(result.Imports);
 
                 // Return the parsed records as a response (or process them further)
                 return Ok(new
                 {
                     Message = "CSV file processed successfully.",
-                    Records = records
+                    Records = result.Imports
                 });
             }
             catch (Exception ex)

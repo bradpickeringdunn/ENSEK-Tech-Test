@@ -1,24 +1,20 @@
 ﻿using ENSEK.Imports.Dtos;
+using ENSEK.Imports.Dtos.MeterReading;
+using ENSEK.Imports.Validations;
 using ENSEK.Imports.Validators;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ENSEK.Imports.Parsers;
 
 public class CsvParser : ICsvParser
 {
-    private readonly ICsvValidator _csvValidator;
+    private readonly ICsvValidator<MeterReadingCsvValidation> _csvValidator;
 
-    public CsvParser(ICsvValidator csvValidator)
+    public CsvParser(ICsvValidator<MeterReadingCsvValidation> csvValidator)
     {
         _csvValidator = csvValidator;
     }
 
-    public List<MeterReadingDto> ParseCsv(string csvContent)
+    public async Task<ImportResult> ParseCsv(string csvContent)
     {
         var records = new List<MeterReadingDto>();
         using var reader = new StringReader(csvContent);
@@ -30,7 +26,14 @@ public class CsvParser : ICsvParser
             throw new InvalidOperationException("The CSV file is empty.");
         }
 
-        var headers = _csvValidator.ValidateHeaders(headerLine.Split(',')); 
+        var headers = headerLine.Split(',');
+        var validationResult = await _csvValidator.ValidateHeaders(headers);
+
+        if (validationResult.Any())
+            return new ImportResult
+            {
+                Errors = validationResult
+            };
 
         // Read each subsequent row
         string? line;
@@ -44,19 +47,23 @@ public class CsvParser : ICsvParser
                 record[headers[i]] = i < values.Length ? values[i] : string.Empty;
             }
 
-            records.Add(ToDto(record));
+       //     records.Add(ToDto(record));
         }
 
-        return records;
-    }
-
-    private MeterReadingDto ToDto(Dictionary<string, string> record)
-    {
-        return new MeterReadingDto
+        return new ImportResult
         {
-            AccountId = int.Parse(record["AccountId"]),
-            DateTime = DateTime.ParseExact(record["MeterReadingDateTime"], "dd/MM/yyyy hh:mm", CultureInfo.InvariantCulture),
-            Value = decimal.Parse(record["MeterReadValue"]),
+            Errors = validationResult
         };
     }
+
+    //private TDto ToDto(Dictionary<string, string> record)
+    //{
+    //    new TDto();
+    //    //return new MeterReadingDto
+    //    //{
+    //    //    AccountId = int.Parse(record["AccountId"]),
+    //    //    DateTime = DateTime.ParseExact(record["MeterReadingDateTime"], "dd/MM/yyyy hh:mm", CultureInfo.InvariantCulture),
+    //    //    Value = decimal.Parse(record["MeterReadValue"]),
+    //    //};
+    //}
 }

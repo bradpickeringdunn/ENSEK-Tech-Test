@@ -1,8 +1,8 @@
-﻿using ENSEK.Imports.Dtos;
+﻿using ENSEK.Imports.Dtos.MeterReading;
 
 namespace ENSEK.Imports.Importers;
 
 public interface ICsvImporter
 {
-    Task Import(List<MeterReadingDto> records);
+    Task Import(IList<MeterReadingDto> records);
 }
