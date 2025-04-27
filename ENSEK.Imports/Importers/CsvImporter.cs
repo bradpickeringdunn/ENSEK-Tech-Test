@@ -1,6 +1,7 @@
 ﻿using ENSEK.DataAccess;
 using ENSEK.DataAccess.Entities;
 using ENSEK.Imports.Dtos;
+using Microsoft.EntityFrameworkCore;
 
 namespace ENSEK.Imports.Importers;
 

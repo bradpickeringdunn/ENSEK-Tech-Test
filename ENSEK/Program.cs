@@ -3,8 +3,12 @@ using ENSEK;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Bind ApiSettings and add it to the services collection
+builder.Configuration.AddJsonFile("appsettings.json", optional:false, reloadOnChange:true);
+
 var startup = new StartUp(builder.Configuration);
 startup.ConfigureServices(builder.Services);
+
 
 // Add services to the container.
 

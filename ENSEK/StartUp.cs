@@ -1,6 +1,7 @@
 ﻿using ENSEK.DataAccess;
 using ENSEK.Imports.Importers;
 using ENSEK.Imports.Parsers;
+using ENSEK.Imports.Validators;
 using Microsoft.EntityFrameworkCore;
 
 namespace ENSEK;
@@ -28,6 +29,7 @@ public class StartUp
 
         serviceCollection.AddScoped<ICsvParser, CsvParser>();
         serviceCollection.AddScoped<ICsvImporter, CsvImporter>();
+        serviceCollection.AddScoped<ICsvValidator, CsvValidator>();
 
     }
 }

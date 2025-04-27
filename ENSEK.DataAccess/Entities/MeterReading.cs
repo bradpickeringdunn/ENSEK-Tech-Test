@@ -11,7 +11,7 @@ public partial class MeterReading
 
     public DateTime MeterReadingDateTime { get; set; }
 
-    public double MeterReadValue { get; set; }
+    public decimal MeterReadValue { get; set; }
 
     public virtual Account Account { get; set; } = null!;
 }
