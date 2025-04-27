@@ -19,4 +19,29 @@ public class CsvValidator<T> : ICsvValidator<T> where T : class
 
         return await Task.FromResult(errors);
     }
+
+    public async Task<IList<string>> ValidateRows(Dictionary<string, string> record)
+    {
+        var errors = new List<string>();
+
+        if (!record.TryGetValue(MeterReadingCsvValidation.MeterReadValueHeader, out var meterReadValue))
+            errors.Add("");
+        else 
+            if(int.TryParse(meterReadValue, out var value))
+                errors.Add("");
+
+        if (!record.TryGetValue(MeterReadingCsvValidation.AccountIdHeader, out var accountId))
+            errors.Add("");
+        else
+            if (decimal.TryParse(accountId, out var id))
+                errors.Add("");
+
+        if (!record.TryGetValue(MeterReadingCsvValidation.MeterReadingDateTimeHeader, out var meterReadingDateTime))
+            errors.Add("");
+        else
+            if (DateTime.TryParse(meterReadingDateTime, out var dateTime))
+                errors.Add("");
+
+        return await Task.FromResult(errors);
+    }
 }

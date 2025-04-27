@@ -4,7 +4,7 @@ namespace ENSEK.Imports.Dtos;
 
 public class ImportResult
 {
-    public IList<string> Errors { get; init; }
+    public IList<string> Errors { get; init; } = new List<string>();
 
-    public IList<MeterReadingDto> Imports { get; init; }
+    public IList<MeterReadingDto> Records { get; init; } = new List<MeterReadingDto>();
 }

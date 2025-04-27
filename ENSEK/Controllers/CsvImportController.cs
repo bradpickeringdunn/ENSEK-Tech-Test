@@ -43,13 +43,13 @@ namespace ENSEK.Controllers
                 // Process the CSV content
                 var result = await _csvParser.ParseCsv(csvContent);
 
-                await _csvImporter.Import(result.Imports);
+                await _csvImporter.Import(result.Records);
 
                 // Return the parsed records as a response (or process them further)
                 return Ok(new
                 {
                     Message = "CSV file processed successfully.",
-                    Records = result.Imports
+                    Records = result.Records
                 });
             }
             catch (Exception ex)
