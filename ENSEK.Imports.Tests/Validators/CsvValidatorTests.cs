@@ -30,15 +30,19 @@ public class CsvValidatorTests
 
 
     [TestMethod]
-    public async Task When_RowDateInvalid_Then_AddError()
+    [DataRow("date")]
+    [DataRow("10102010")]
+    [DataRow("2010-11/22")]
+    public async Task When_RowDateInvalid_Then_AddError(string date)
     {
-        var row = new Dictionary<string, string>
+        var result = await _CsvValidator.ValidateRows(new Dictionary<string, string>
         {
             {MeterReadingCsvValidation.AccountIdHeader , "12"},
-            {MeterReadingCsvValidation.MeterReadingDateTimeHeader , "123456"},
-            {MeterReadingCsvValidation.MeterReadValueHeader , "1.12"}
-        };
+            {MeterReadingCsvValidation.MeterReadingDateTimeHeader , date},
+            {MeterReadingCsvValidation.MeterReadValueHeader , "1,2.0"}
+        });
 
-        var result = _CsvValidator.ValidateRows(row);
+        Assert.IsNotNull(result);
+        Assert.IsTrue(result.All(x => x.Contains("as Meter Reading DateTime")));
     }
 }

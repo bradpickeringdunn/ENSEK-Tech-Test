@@ -36,13 +36,16 @@ public partial class ENSEKDbContext : DbContext
 
         modelBuilder.Entity<MeterReading>(entity =>
         {
-            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.HasKey(e => new { e.AccountId, e.MeterReadingDateTime });
+
             entity.Property(e => e.MeterReadingDateTime).HasColumnType("datetime");
+            entity.Property(e => e.MeterReadValue).HasColumnType("decimal(18, 0)");
 
             entity.HasOne(d => d.Account).WithMany(p => p.MeterReadings)
                 .HasForeignKey(d => d.AccountId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_MeterReadings_Accounts");
+
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -10,7 +10,7 @@ public class CsvValidator<T> : ICsvValidator<T> where T : class
 
         foreach (var header in MeterReadingCsvValidation.Headers)
         {
-            if(strings.Any(x => x == header))
+            if(strings.All(x => x != header))
                 errors.Add($"The header {header} is missing from the csv.");
         }
 
@@ -24,20 +24,20 @@ public class CsvValidator<T> : ICsvValidator<T> where T : class
         if (!record.TryGetValue(MeterReadingCsvValidation.MeterReadValueHeader, out var meterReadValue))
             errors.Add("Can't find value for Meter Read Value");
         else
-            if (int.TryParse(meterReadValue, out var value))
-            errors.Add($"Can't parse value {value} as Meter Read Value");
+            if (!decimal.TryParse(meterReadValue, out var value))
+                errors.Add($"Can't parse value {meterReadValue} as Meter Read Value");
 
         if (!record.TryGetValue(MeterReadingCsvValidation.AccountIdHeader, out var accountId))
             errors.Add("Can't find value for Account Id");
         else
-            if (decimal.TryParse(accountId, out var id))
-            errors.Add($"Can't parse value {id} as Account Id");
+            if (!int.TryParse(accountId, out var id))
+            errors.Add($"Can't parse value {accountId} as Account Id");
 
         if (!record.TryGetValue(MeterReadingCsvValidation.MeterReadingDateTimeHeader, out var meterReadingDateTime))
             errors.Add("Can't find value for Meter Reading DateTime");
         else
-            if (DateTime.TryParse(meterReadingDateTime, out var dateTime))
-                errors.Add($"Can't parse value {dateTime} as Meter Reading DateTime");
+            if (!DateTime.TryParse(meterReadingDateTime, out var dateTime))
+                errors.Add($"Can't parse value {meterReadingDateTime} as Meter Reading DateTime");
 
         return await Task.FromResult(errors);
     }
