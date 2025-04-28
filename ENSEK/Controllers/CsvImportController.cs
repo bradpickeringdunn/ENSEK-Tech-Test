@@ -48,7 +48,7 @@ namespace ENSEK.Controllers
                 return Ok(new
                 {
                     Message = result.Errors.Any() ? $"The following errors occured: {result.Errors.ToString()}" :
-                                                    "CSV file processed successfully.",,
+                                                    "CSV file processed successfully.",
                     AddedRecords = result.Records
                 });
             }

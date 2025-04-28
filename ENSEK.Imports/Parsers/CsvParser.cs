@@ -2,6 +2,7 @@
 using ENSEK.Imports.Dtos.MeterReading;
 using ENSEK.Imports.Validations;
 using ENSEK.Imports.Validators;
+using System;
 using System.Globalization;
 
 namespace ENSEK.Imports.Parsers;
@@ -49,10 +50,8 @@ public class CsvParser : ICsvParser
 
                 validationResult = await _csvValidator.ValidateRows(record);
 
-                if (validationResult.Any())
-                    break;
-
-                records.Add(ToDto(record));
+                if (!validationResult.Any())
+                    records.Add(ToDto(record));
             }
         }
 
@@ -68,7 +67,7 @@ public class CsvParser : ICsvParser
         return new MeterReadingDto
         {
             AccountId = int.Parse(record["AccountId"]),
-            DateTime = DateTime.ParseExact(record["MeterReadingDateTime"], "dd/MM/yyyy hh:mm", CultureInfo.InvariantCulture),
+            DateTime = DateTime.ParseExact(record["MeterReadingDateTime"], "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None),
             Value = decimal.Parse(record["MeterReadValue"]),
         };
     }

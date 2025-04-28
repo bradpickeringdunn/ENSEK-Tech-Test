@@ -1,4 +1,5 @@
 ﻿using ENSEK.Imports.Validations;
+using System.Globalization;
 
 namespace ENSEK.Imports.Validators;
 
@@ -35,10 +36,12 @@ public class CsvValidator<T> : ICsvValidator<T> where T : class
 
         if (!record.TryGetValue(MeterReadingCsvValidation.MeterReadingDateTimeHeader, out var meterReadingDateTime))
             errors.Add("Can't find value for Meter Reading DateTime");
-        else
-            if (!DateTime.TryParse(meterReadingDateTime, out var dateTime))
+        else {
+            DateTime dateTime = default(DateTime);
+            if (!DateTime.TryParseExact(meterReadingDateTime, "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out dateTime))
                 errors.Add($"Can't parse value {meterReadingDateTime} as Meter Reading DateTime");
 
+        }
         return await Task.FromResult(errors);
     }
 }
