@@ -20,7 +20,7 @@ namespace ENSEK.Controllers
             _csvImporter = csvImporter;
         }
 
-        [HttpPost("upload-csv")]
+        [HttpPost("meter-reading-uploads")]
         public async Task<IActionResult> UploadCsv(IFormFile file, CancellationToken cancellationToken)
         {
             // Validate the file
@@ -47,9 +47,9 @@ namespace ENSEK.Controllers
 
                 return Ok(new
                 {
-                    Message = result.Errors.Any() ? $"The following errors occured: {result.Errors.ToString()}" :
-                                                    "CSV file processed successfully.",
-                    AddedRecords = result.Records
+                    successfulUploadCount = result.Records.Count,
+                    FailedUploadCount = result.Records.Count,
+                    ErrorMessage = result.Errors.Any() ? $"The following errors occured: {result.Errors.ToString()}" : string.Empty
                 });
             }
             catch (Exception ex)
