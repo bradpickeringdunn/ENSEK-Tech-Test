@@ -1,0 +1,181 @@
+USE [master]
+GO
+/****** Object:  Database [ENSEK]    Script Date: 28/04/2025 08:39:12 ******/
+CREATE DATABASE [ENSEK]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'ENSEK', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\DATA\ENSEK.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'ENSEK_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\DATA\ENSEK_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
+GO
+ALTER DATABASE [ENSEK] SET COMPATIBILITY_LEVEL = 160
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [ENSEK].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [ENSEK] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [ENSEK] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [ENSEK] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [ENSEK] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [ENSEK] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [ENSEK] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [ENSEK] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [ENSEK] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [ENSEK] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [ENSEK] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [ENSEK] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [ENSEK] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [ENSEK] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [ENSEK] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [ENSEK] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [ENSEK] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [ENSEK] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [ENSEK] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [ENSEK] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [ENSEK] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [ENSEK] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [ENSEK] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [ENSEK] SET RECOVERY FULL 
+GO
+ALTER DATABASE [ENSEK] SET  MULTI_USER 
+GO
+ALTER DATABASE [ENSEK] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [ENSEK] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [ENSEK] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [ENSEK] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [ENSEK] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [ENSEK] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'ENSEK', N'ON'
+GO
+ALTER DATABASE [ENSEK] SET QUERY_STORE = ON
+GO
+ALTER DATABASE [ENSEK] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
+GO
+USE [ENSEK]
+GO
+/****** Object:  Table [dbo].[Accounts]    Script Date: 28/04/2025 08:39:12 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Accounts](
+	[AccountId] [int] NOT NULL,
+	[FirstName] [nvarchar](50) NOT NULL,
+	[LastName] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_Accounts] PRIMARY KEY CLUSTERED 
+(
+	[AccountId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[MeterReadings]    Script Date: 28/04/2025 08:39:12 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[MeterReadings](
+	[Id] [uniqueidentifier] NOT NULL,
+	[AccountId] [int] NOT NULL,
+	[MeterReadingDateTime] [datetime] NOT NULL,
+	[MeterReadValue] [decimal](18, 0) NOT NULL,
+ CONSTRAINT [PK_MeterReadings] PRIMARY KEY CLUSTERED 
+(
+	[AccountId] ASC,
+	[MeterReadingDateTime] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (1234, N'Freya', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (1239, N'Noddy', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (1240, N'Archie', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (1241, N'Lara', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (1242, N'Tim', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (1243, N'Graham', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (1244, N'Tony', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (1245, N'Neville', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (1246, N'Jo', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (1247, N'Jim', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (1248, N'Pam', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (2233, N'Barry', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (2344, N'Tommy', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (2345, N'Jerry', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (2346, N'Ollie', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (2347, N'Tara', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (2348, N'Tammy', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (2349, N'Simon', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (2350, N'Colin', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (2351, N'Gladys', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (2352, N'Greg', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (2353, N'Tony', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (2355, N'Arthur', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (2356, N'Craig', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (4534, N'JOSH', N'TEST')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (6776, N'Laura', N'Test')
+GO
+INSERT [dbo].[Accounts] ([AccountId], [FirstName], [LastName]) VALUES (8766, N'Sally', N'Test')
+GO
+ALTER TABLE [dbo].[MeterReadings]  WITH CHECK ADD  CONSTRAINT [FK_MeterReadings_Accounts] FOREIGN KEY([AccountId])
+REFERENCES [dbo].[Accounts] ([AccountId])
+GO
+ALTER TABLE [dbo].[MeterReadings] CHECK CONSTRAINT [FK_MeterReadings_Accounts]
+GO
+USE [master]
+GO
+ALTER DATABASE [ENSEK] SET  READ_WRITE 
+GO
