@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ENSEK.DataAccess.Entities;
+﻿namespace ENSEK.DataAccess.Entities;
 
 public partial class MeterReading
 {

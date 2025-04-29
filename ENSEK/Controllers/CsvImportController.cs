@@ -4,45 +4,42 @@ using System.IO;
 using ENSEK.Imports.Parsers;
 using ENSEK.Imports.Importers;
 using ENSEK.Imports.Dtos.MeterReading;
+using Microsoft.AspNetCore.Http.Metadata;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ENSEK.Controllers
 {
+    //[Authorize] Given time id add authentication
     [ApiController]
     [Route("[controller]")]
     public class CsvImportController : Controller
     {
         private readonly ICsvParser _csvParser;
         private readonly ICsvImporter _csvImporter;
+        private readonly ILogger<CsvImportController> _logger;
 
-        public CsvImportController(ICsvParser csvParser, ICsvImporter csvImporter)
+        public CsvImportController(ICsvParser csvParser, ICsvImporter csvImporter, ILogger<CsvImportController> logger)
         {
             _csvParser = csvParser;
             _csvImporter = csvImporter;
+            _logger = logger;
         }
 
         [HttpPost("meter-reading-uploads")]
-        public async Task<IActionResult> UploadCsv(IFormFile file, CancellationToken cancellationToken)
+        public async Task<IActionResult> Post(IFormFile file, CancellationToken cancellationToken)
         {
-            // Validate the file
             if (file == null || file.Length == 0)
-            {
                 return BadRequest("No file was uploaded or the file is empty.");
-            }
-
+            
             if (!file.FileName.EndsWith(".csv", StringComparison.OrdinalIgnoreCase))
-            {
                 return BadRequest("The uploaded file is not a CSV file.");
-            }
-
+            
             try
             {
-                // Read the CSV file content
                 using var streamReader = new StreamReader(file.OpenReadStream(), Encoding.UTF8);
                 var csvContent = await streamReader.ReadToEndAsync();
 
-                // Process the CSV content
                 var result = await _csvParser.ParseCsv(csvContent);
-
                 await _csvImporter.UpsertImports(result.Records, cancellationToken);
 
                 return Ok(new
@@ -54,8 +51,8 @@ namespace ENSEK.Controllers
             }
             catch (Exception ex)
             {
-                // Handle any errors that occur during file processing
-                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred while processing the file: {ex.Message}");
+                _logger.LogError(ex, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, $"An error occurred while processing the csv import");
             }
         }
 

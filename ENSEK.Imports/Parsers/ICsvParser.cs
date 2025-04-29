@@ -1,5 +1,4 @@
 ﻿using ENSEK.Imports.Dtos;
-using ENSEK.Imports.Dtos.MeterReading;
 
 namespace ENSEK.Imports.Parsers;
 
